@@ -1,4 +1,5 @@
 import FrontPage from "./components/FrontPage"
+import MainPage from './components/MainPage'
 import {
   BrowserRouter as Router,
   Switch,
@@ -16,10 +17,14 @@ function App() {
           <Route exact path="/register">
             <FrontPage />
           </Route>
+          <Route exact path="/todo">
+            <MainPage/>
+          </Route>
         </Switch>
       </Router>
     </div>
   );
 }
+
 
 export default App;

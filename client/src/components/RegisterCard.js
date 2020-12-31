@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 function RegisterCard () {
   return (
     <div className="center">
-      <div className="card">
+      <div className="card login-register">
       <img src={logo} style={{width: 'auto', marginTop: '15px'}} className="mx-auto" alt="Logo"></img>
         <h3 style={{
           fontFamily: 'Fredoka One',
