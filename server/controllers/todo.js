@@ -80,7 +80,7 @@ class TodosController {
   static async editStatus(req, res, next){
     try {
       let payload = {
-        status: req.body.status
+        status: "completed"
       }
 
       const data = await Todo.update(payload, {
