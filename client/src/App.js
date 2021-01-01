@@ -11,22 +11,37 @@ import axios from "axios"
 
 function App() {
   const [isAuth, setAuth] = React.useState(false)
+  const [emailLogin, setEmail] = React.useState('')
+  const [passwordLogin, setPassword] = React.useState('')
+
   function login(email, password) {
+    setEmail(email)
+    setPassword(password)
+    setAuth(true)
+    console.log(email, password)
+  }
+  function hitAPI(emailLogin, passwordLogin) {
     let payload = {
-      email,
-      password
+      email: emailLogin, password: passwordLogin
     }
-    axios({
+    return axios({
       url: 'http://localhost:4000/login',
-      data: payload,
-      method: 'post'
-    })
-    .then(response => {
-      console.log("Hallo")
-      localStorage.setItem('test', 'test')
-      setAuth(true)
+      method: 'post',
+      data: payload
     })
   }
+  React.useEffect(() => {
+    hitAPI(emailLogin, passwordLogin)
+      .then(response => {
+        setAuth(true)
+        console.log(response.data)
+      })
+      .catch(err => {
+        setAuth(false)
+        console.log(err.response.data)
+      })
+  })
+
     return (
       <div className="App">
         <Router>

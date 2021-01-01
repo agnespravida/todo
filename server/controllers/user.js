@@ -42,6 +42,7 @@ class UserController {
             id: data.id,
             email: data.email
           }, process.env.SECRET_JWT)
+          console.log("login sukses")
           res.status(200).json({ access_token })
         }
         else {
