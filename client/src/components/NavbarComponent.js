@@ -1,4 +1,4 @@
-import './Main.css'
+import './assets/Main.css'
 import Logo from './img/logonavbar.png'
 
 function Navbar () {

@@ -1,4 +1,4 @@
-import './LoginRegister.css'
+import './assets/LoginRegister.css'
 import logo from './img/logonavbar.png'
 import { Link } from 'react-router-dom'
 

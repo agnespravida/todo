@@ -1,4 +1,4 @@
-import './Main.css'
+import './assets/Main.css'
 
 function TaskCard () {
   return (

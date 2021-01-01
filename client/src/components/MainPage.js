@@ -1,5 +1,5 @@
-import './FrontPage.css'
-import './Main.css'
+import './assets/FrontPage.css'
+import './assets/Main.css'
 import background from './img/background.png'
 import Navbar from './NavbarComponent'
 import TaskBoard from './TaskBoard'

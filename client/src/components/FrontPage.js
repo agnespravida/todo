@@ -1,4 +1,4 @@
-import './FrontPage.css'
+import './assets/FrontPage.css'
 import LoginCard from "./LoginCard.js"
 import RegisterCard from "./RegisterCard.js"
 import {
@@ -6,14 +6,31 @@ import {
   Switch,
   Route
 } from "react-router-dom";
+import React from 'react'
 
-function FrontPage() {
+
+function FrontPage(props) {
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
+
+  function onChangeEmail(event) {
+    setEmail(event.target.value)
+  }
+  function onChangePassword(event){
+    setPassword(event.target.value)
+  }
+  function onSubmit() {
+    props.login(email, password)
+  }
   return (
     <div>
       <Router>
         <Switch>
           <Route exact path="/">
-            <LoginCard />
+            <LoginCard 
+            onChangeEmail={onChangeEmail}
+            onChangePassword={onChangePassword}
+            onSubmit={onSubmit}/>
           </Route>
           <Route exact path="/register">
             <RegisterCard />
