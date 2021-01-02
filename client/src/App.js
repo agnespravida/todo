@@ -7,41 +7,61 @@ import {
   Redirect
 } from "react-router-dom"
 import React from 'react'
-import axios from "axios"
+import axios from "./config/axios"
+
 
 function App() {
   const [isAuth, setAuth] = React.useState(false)
-  const [emailLogin, setEmail] = React.useState('')
-  const [passwordLogin, setPassword] = React.useState('')
-
-  function login(email, password) {
-    setEmail(email)
-    setPassword(password)
+  const [login, setLogin] = React.useState({
+    email: '',
+    password: ''
+  })
+  function loginUser(login) {
+    setLogin(login)
     setAuth(true)
-    console.log(email, password)
   }
-  function hitAPI(emailLogin, passwordLogin) {
-    let payload = {
-      email: emailLogin, password: passwordLogin
-    }
-    return axios({
-      url: 'http://localhost:4000/login',
+
+  function loginAxios(){
+    axios({
+      url: '/login',
       method: 'post',
-      data: payload
+      data: login
+    })
+    .then((res) => {
+      console.log(res.data)
+      localStorage.setItem('access_token', res.data.access_token)
+      fetchTodo()
+      setAuth(true)
+    })
+    .catch(err => {
+      console.log(err.response.data)
+      setAuth(false)
     })
   }
-  React.useEffect(() => {
-    hitAPI(emailLogin, passwordLogin)
-      .then(response => {
-        setAuth(true)
-        console.log(response.data)
-      })
-      .catch(err => {
-        setAuth(false)
-        console.log(err.response.data)
-      })
-  })
+  function fetchTodo() {
+    axios({
+      url: '/todos',
+      method: 'get',
+      headers: {access_token: localStorage.getItem('access_token')}
+    })
+    .then(res => {
+      console.log(res.data)
+    })
+    .catch(err => {
+      console.log(err.res.data)
+    })
+  }
 
+  function logout() {
+    setLogin({email: '', password: ''})
+    setAuth(false)
+    localStorage.clear()
+  }
+
+  React.useEffect(() => {
+    loginAxios()
+  })
+ 
     return (
       <div className="App">
         <Router>
@@ -50,13 +70,13 @@ function App() {
           : <Redirect to="/"/>}
           <Switch>
             <Route exact path="/">
-              <FrontPage login={login}/>
+              <FrontPage loginUser={loginUser}/>
             </Route>
             <Route exact path="/register">
-              <FrontPage login={login}/>
+              <FrontPage loginUser={loginUser}/>
             </Route>
             <Route exact path="/todo">
-              <MainPage />
+              <MainPage logout={logout}/>
             </Route>
           </Switch>
         </Router>

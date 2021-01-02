@@ -9,27 +9,29 @@ import {
 import React from 'react'
 
 
-function FrontPage(props) {
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
 
-  function onChangeEmail(event) {
-    setEmail(event.target.value)
+function FrontPage(props) {
+  const [login, setLogin] = React.useState({
+    email: '',
+    password: ''
+  })
+  
+
+  function onChangeLogin(event) {
+    setLogin({...login, [event.target.name]: event.target.value})
   }
-  function onChangePassword(event){
-    setPassword(event.target.value)
-  }
+
   function onSubmit() {
-    props.login(email, password)
+    props.loginUser(login)
   }
+
   return (
     <div>
       <Router>
         <Switch>
           <Route exact path="/">
             <LoginCard 
-            onChangeEmail={onChangeEmail}
-            onChangePassword={onChangePassword}
+            onChangeLogin={onChangeLogin}
             onSubmit={onSubmit}/>
           </Route>
           <Route exact path="/register">

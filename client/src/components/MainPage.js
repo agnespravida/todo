@@ -5,11 +5,17 @@ import Navbar from './NavbarComponent'
 import TaskBoard from './TaskBoard'
 import FullCalendarComponent from './FullCalendar'
 import AddForm from './AddForm'
+import React from 'react'
 
-function MainPage () {
+function MainPage (props) {
+
+  function logout() {
+    props.logout()
+  }
+
   return (
     <div>
-      <Navbar />
+      <Navbar logout={logout}/>
       <div className="container-fluid">
         <div className="row">
           <div className="col-4">

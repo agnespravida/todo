@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom'
 
 function LoginCard (props) {
 
-  function onChangeEmail(event) {
-    props.onChangeEmail(event)
+  function onChangeLogin(event) {
+    props.onChangeLogin(event)
   }
-  function onChangePassword(event) {
-    props.onChangePassword(event)
-  }
+  // function onChangeEmail(event) {
+  //   props.onChangeEmail(event)
+  // }
+  // function onChangePassword(event) {
+  //   props.onChangePassword(event)
+  // }
   function onSubmit(){
     props.onSubmit()
   }
@@ -30,13 +33,13 @@ function LoginCard (props) {
                 <div className="input-group-prepend">
                   <span className="input-group-text"><i className="fas fa-envelope"></i></span>
                 </div>
-                <input type="text" className="form-control" placeholder="email" onChange={onChangeEmail}/>
+                <input type="text" className="form-control" placeholder="email" name="email" onChange={onChangeLogin}/>
               </div>
               <div className="input-group form-group">
                 <div className="input-group-prepend">
                   <span className="input-group-text"><i className="fas fa-key"></i></span>
                 </div>
-                <input type="password" className="form-control" placeholder="password" onChange={onChangePassword}/>
+                <input type="password" className="form-control" placeholder="password" name="password" onChange={onChangeLogin}/>
               </div>
               <div className="form-group">
                 <input type="submit" value="Login" className="btn btn-info"/>
