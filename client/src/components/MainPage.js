@@ -8,10 +8,29 @@ import AddForm from './AddForm'
 import React from 'react'
 
 function MainPage (props) {
+  const [todo, setTodo] = React.useState({
+    title: '',
+    due_date: '',
+    description: ''
+  })
+  function onChangeTodo(event) {
+    setTodo({...todo, [event.target.name]: event.target.value})
+  }
+
+  function onSubmitTodo() {
+    props.addTodo(todo)
+  }
 
   function logout() {
     props.logout()
   }
+  function deleteTodo(id) {
+    props.deleteTodo(id)
+  }
+
+  // React.useEffect(() => {
+  //   props.fetchTodo()
+  // }, [props.todos])
 
   return (
     <div>
@@ -20,8 +39,8 @@ function MainPage (props) {
         <div className="row">
           <div className="col-4">
             <button className="btn btn-lg btn-info task-board glass" data-toggle="modal" data-target="#add-form">Add Task</button>
-            <AddForm />
-            <TaskBoard />
+            <AddForm onChangeTodo={onChangeTodo} onSubmitTodo={onSubmitTodo}/>
+            <TaskBoard todos={props.todos} deleteTodo={deleteTodo}/>
           </div>
           <div className="col-8">
             <FullCalendarComponent />

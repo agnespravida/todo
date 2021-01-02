@@ -16,6 +16,10 @@ function App() {
     email: '',
     password: ''
   })
+  const [todos, setTodos] = React.useState([])
+  const [todo, setTodo] = React.useState({})
+  const [id, setId] = React.useState(null)
+
   function loginUser(login) {
     setLogin(login)
     setAuth(true)
@@ -28,10 +32,9 @@ function App() {
       data: login
     })
     .then((res) => {
-      console.log(res.data)
       localStorage.setItem('access_token', res.data.access_token)
-      fetchTodo()
       setAuth(true)
+      fetchTodo()
     })
     .catch(err => {
       console.log(err.response.data)
@@ -45,10 +48,57 @@ function App() {
       headers: {access_token: localStorage.getItem('access_token')}
     })
     .then(res => {
+      if (localStorage.getItem('access_token')){
+        setAuth(true)
+      }
+      else {
+        setAuth(false)
+      }
+      setTodos(res.data)
       console.log(res.data)
     })
     .catch(err => {
-      console.log(err.res.data)
+      console.log(err.response.data)
+    })
+  }
+  
+  function addTodo(todo) {
+    setTodo(todo)
+  }
+
+  function addTodoAxios() {
+    axios({
+      url: '/todos/',
+      method: 'post',
+      headers: {access_token: localStorage.getItem('access_token')},
+      data: todo
+    })
+    .then((res) => {
+      fetchTodo()
+      console.log(res.data)
+    })
+    .catch(err => {
+      console.log(err.response.data);
+    })
+  }
+
+  function deleteTodo(id) {
+    setId(id)
+  }
+
+  function deleteTodoAxios() {
+    axios({
+      url: `/todos/${id}`,
+      method: 'DELETE',
+      headers: {
+        access_token: localStorage.getItem('access_token')
+      }
+    })
+    .then(res => {
+      fetchTodo()
+    })
+    .catch(err => {
+      console.log(err.response.data)
     })
   }
 
@@ -59,9 +109,17 @@ function App() {
   }
 
   React.useEffect(() => {
-    loginAxios()
+    addTodoAxios()
   })
- 
+  React.useEffect(() => {
+    loginAxios()
+  }, [login])
+  React.useEffect(() => {
+    addTodoAxios()
+  })
+  React.useEffect(() => {
+    deleteTodoAxios()
+  })
     return (
       <div className="App">
         <Router>
@@ -76,7 +134,12 @@ function App() {
               <FrontPage loginUser={loginUser}/>
             </Route>
             <Route exact path="/todo">
-              <MainPage logout={logout}/>
+              <MainPage 
+              logout={logout}
+              todos={todos}
+              fetchTodo={fetchTodo}
+              addTodo={addTodo}
+              deleteTodo={deleteTodo}/>
             </Route>
           </Switch>
         </Router>
