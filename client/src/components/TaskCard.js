@@ -3,6 +3,7 @@ import './assets/Main.css'
 
 
 function TaskCard (props) {
+  let due_date = props.todo.due_date.slice(0, 10)
   let checkButton;
   if (props.todo.status === 'on going'){
     checkButton = <i className="far fa-circle" style={{fontSize: '24px'}}></i>
@@ -33,7 +34,7 @@ function TaskCard (props) {
         <div className="card-body">
           <p className="card-text">
             {props.todo.description} <br /><br/>
-            <i className='far fa-calendar' style={{fontSize: '24px'}}></i> Due on: {props.todo.due_date} <br/><br/>
+            <i className='far fa-calendar' style={{fontSize: '24px'}}></i> Due on: {due_date} <br/><br/>
             <button className="btn btn-info" data-toggle="modal" data-target="#edit-form" onClick={populateForm}><i className="far fa-edit" style={{fontSize: '18px'}}> Edit Task</i></button>
           </p>
         </div>

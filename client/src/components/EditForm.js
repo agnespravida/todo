@@ -1,6 +1,5 @@
 import React from 'react'
 function EditForm (props) {
-  let due_date = props.populate.due_date.slice(0, 10)
   const [edited, setEdited] = React.useState({
     title: "",
     description: "",
@@ -29,19 +28,19 @@ function EditForm (props) {
               <div className="input-group-prepend">
                 <span className="input-group-text"><i className="fas fa-clipboard"></i></span>
               </div>
-              <input type="text" className="form-control" placeholder="task title" name="title" defaultValue={props.populate.title} onChange={changeTodo}/>
+              <input type="text" className="form-control" placeholder="task title" name="title" onChange={changeTodo}/>
             </div>
             <div className="input-group form-group">
               <div className="input-group-prepend">
                 <span className="input-group-text"><i className="fas fa-sticky-note"></i></span>
               </div>
-              <input type="text" className="form-control" placeholder="description" name="description" defaultValue={props.populate.description} onChange={changeTodo}/>
+              <input type="text" className="form-control" placeholder="description" name="description"  onChange={changeTodo}/>
             </div>
             <div className="input-group form-group">
               <div className="input-group-prepend">
                 <span className="input-group-text"><i className="fas fa-calendar"></i></span>
               </div>
-              <input type="date" className="form-control" placeholder="due date" name="due_date" defaultValue={due_date} onChange={changeTodo}/>
+              <input type="date" className="form-control" placeholder="due date" name="due_date"  onChange={changeTodo}/>
             </div>
             <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
             <input type="submit" className="btn btn-primary" value="Save Changes"/>

@@ -56,13 +56,13 @@ function MainPage (props) {
       <div className="container-fluid">
         <div className="row">
           <div className="col-4">
-            <button className="btn btn-lg btn-info task-board glass" data-toggle="modal" data-target="#add-form">Add Task</button>
+            <button className="btn btn-lg btn-info button" data-toggle="modal" data-target="#add-form">Add Task</button>
             <AddForm onChangeTodo={onChangeTodo} onSubmitTodo={onSubmitTodo}/>
             <EditForm populate={populate} editTodo={editTodo}/>
             <TaskBoard todos={props.todos} getIdDelete={getIdDelete} getIdUpdateStatus={getIdUpdateStatus} populateForm={populateForm}/>
           </div>
           <div className="col-8">
-            <FullCalendarComponent />
+            <FullCalendarComponent todos={props.todos}/>
           </div>
         </div>
       </div>
