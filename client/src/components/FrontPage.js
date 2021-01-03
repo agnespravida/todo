@@ -25,6 +25,9 @@ function FrontPage(props) {
     props.loginUser(login)
   }
 
+  function register(registerUser) {
+    props.register(registerUser)
+  }
   return (
     <div>
       <Router>
@@ -35,7 +38,7 @@ function FrontPage(props) {
             onSubmit={onSubmit}/>
           </Route>
           <Route exact path="/register">
-            <RegisterCard />
+            <RegisterCard register={register}/>
           </Route>
         </Switch>
       </Router>

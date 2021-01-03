@@ -20,7 +20,19 @@ function App() {
   // const [todo, setTodo] = React.useState({})
   // const [idDelete, setIdDelete] = React.useState(null)
   // const [idUpdate, setIdUpdate] = React.useState(null)
-
+  function register(registerUser){
+    axios({
+      url: '/register',
+      data: registerUser,
+      method: 'post'
+    })
+    .then(() => {
+      setAuth(false)
+    })
+    .catch(err => {
+      console.log(err.response.data)
+    })
+  }
   function loginUser(login) {
     setLogin(login)
     setAuth(true)
@@ -207,10 +219,10 @@ function App() {
           : <Redirect to="/"/>}
           <Switch>
             <Route exact path="/">
-              <FrontPage loginUser={loginUser}/>
+              <FrontPage loginUser={loginUser} register={register}/>
             </Route>
             <Route exact path="/register">
-              <FrontPage loginUser={loginUser}/>
+              <FrontPage loginUser={loginUser} register={register}/>
             </Route>
             <Route exact path="/todo">
               <MainPage 
