@@ -17,9 +17,9 @@ function App() {
     password: ''
   })
   const [todos, setTodos] = React.useState([])
-  const [todo, setTodo] = React.useState({})
-  const [idDelete, setIdDelete] = React.useState(null)
-  const [idUpdate, setIdUpdate] = React.useState(null)
+  // const [todo, setTodo] = React.useState({})
+  // const [idDelete, setIdDelete] = React.useState(null)
+  // const [idUpdate, setIdUpdate] = React.useState(null)
 
   function loginUser(login) {
     setLogin(login)
@@ -64,10 +64,7 @@ function App() {
   }
   
   function addTodo(todo) {
-    setTodo(todo)
-  }
-
-  function addTodoAxios() {
+    // setTodo(todo)
     axios({
       url: '/todos/',
       method: 'post',
@@ -83,13 +80,26 @@ function App() {
     })
   }
 
-  function getIdDelete(id) {
-    setIdDelete(id)
-  }
+  // function addTodoAxios() {
+  //   axios({
+  //     url: '/todos/',
+  //     method: 'post',
+  //     headers: {access_token: localStorage.getItem('access_token')},
+  //     data: todo
+  //   })
+  //   .then((res) => {
+  //     fetchTodo()
+  //     console.log(res.data)
+  //   })
+  //   .catch(err => {
+  //     console.log(err.response.data);
+  //   })
+  // }
 
-  function deleteTodo() {
+  function getIdDelete(id) {
+    // setIdDelete(id)
     axios({
-      url: `/todos/${idDelete}`,
+      url: `/todos/${id}`,
       method: 'DELETE',
       headers: {
         access_token: localStorage.getItem('access_token')
@@ -103,18 +113,64 @@ function App() {
     })
   }
 
+  // function deleteTodo() {
+  //   axios({
+  //     url: `/todos/${idDelete}`,
+  //     method: 'DELETE',
+  //     headers: {
+  //       access_token: localStorage.getItem('access_token')
+  //     }
+  //   })
+  //   .then(res => {
+  //     fetchTodo()
+  //   })
+  //   .catch(err => {
+  //     console.log(err.response.data)
+  //   })
+  // }
+
   function getIdUpdateStatus(id) {
-    setIdUpdate(id)
-  }
-  function editStatus() {
+    // setIdUpdate(id)
     axios({
-      url: `/todos/${idUpdate}`,
+      url: `/todos/${id}`,
       method: 'patch',
       headers: {
         access_token: localStorage.getItem('access_token')
       }
     })
     .then(res => {
+      fetchTodo()
+    })
+    .catch(err => {
+      console.log(err.response.data)
+    })
+  }
+  // function editStatus() {
+  //   axios({
+  //     url: `/todos/${idUpdate}`,
+  //     method: 'patch',
+  //     headers: {
+  //       access_token: localStorage.getItem('access_token')
+  //     }
+  //   })
+  //   .then(res => {
+  //     fetchTodo()
+  //   })
+  //   .catch(err => {
+  //     console.log(err.response.data)
+  //   })
+  // }
+
+  function editTodo(todo, id) {
+    axios({
+      url: `/todos/${id}`,
+      method: 'put',
+      headers: {
+        access_token: localStorage.getItem('access_token')
+      },
+      data: todo
+    })
+    .then(() => {
       fetchTodo()
     })
     .catch(err => {
@@ -132,14 +188,17 @@ function App() {
     loginAxios()
   }, [login])
   React.useEffect(() => {
-    addTodoAxios()
-  })
-  React.useEffect(() => {
-    deleteTodo()
-  })
-  React.useEffect(() => {
-    editStatus()
-  })
+    fetchTodo()
+  }, [todos])
+  // React.useEffect(() => {
+  //   addTodoAxios()
+  // })
+  // React.useEffect(() => {
+  //   deleteTodo()
+  // })
+  // React.useEffect(() => {
+  //   editStatus()
+  // })
     return (
       <div className="App">
         <Router>
@@ -160,7 +219,9 @@ function App() {
               fetchTodo={fetchTodo}
               addTodo={addTodo}
               getIdDelete={getIdDelete}
-              getIdUpdateStatus={getIdUpdateStatus}/>
+              getIdUpdateStatus={getIdUpdateStatus}
+              editTodo={editTodo}
+              />
             </Route>
           </Switch>
         </Router>

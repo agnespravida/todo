@@ -8,6 +8,7 @@ import AddForm from './AddForm'
 import React from 'react'
 import EditForm from './EditForm'
 
+
 function MainPage (props) {
   const [todo, setTodo] = React.useState({
     title: '',
@@ -16,10 +17,9 @@ function MainPage (props) {
   })
   const [populate, setPopulate] = React.useState({
     title: '',
-    due_date: '',
-    description: ''
+    description: '',
+    due_date: ''
   })
-
   function onChangeTodo(event) {
     setTodo({...todo, [event.target.name]: event.target.value})
   }
@@ -42,6 +42,10 @@ function MainPage (props) {
   function populateForm(todo) {
     setPopulate(todo)
   }
+
+  function editTodo(todo, id) {
+    props.editTodo(todo, id)
+  }
   // React.useEffect(() => {
   //   props.fetchTodo()
   // }, [props.todos])
@@ -54,7 +58,7 @@ function MainPage (props) {
           <div className="col-4">
             <button className="btn btn-lg btn-info task-board glass" data-toggle="modal" data-target="#add-form">Add Task</button>
             <AddForm onChangeTodo={onChangeTodo} onSubmitTodo={onSubmitTodo}/>
-            <EditForm populate={populate}/>
+            <EditForm populate={populate} editTodo={editTodo}/>
             <TaskBoard todos={props.todos} getIdDelete={getIdDelete} getIdUpdateStatus={getIdUpdateStatus} populateForm={populateForm}/>
           </div>
           <div className="col-8">

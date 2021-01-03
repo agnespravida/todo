@@ -1,5 +1,18 @@
+import React from 'react'
 function EditForm (props) {
-  let due_date = props.populate.due_date.slice(0,10)
+  let due_date = props.populate.due_date.slice(0, 10)
+  const [edited, setEdited] = React.useState({
+    title: "",
+    description: "",
+    due_date: ""
+  })
+
+  function changeTodo(event) {
+    setEdited({...edited, [event.target.name]: event.target.value})
+  }
+  function editTodo(){
+    props.editTodo(edited, props.populate.id)
+  }
  return (
   <div className="modal" id="edit-form" tabIndex="-1" role="dialog" aria-hidden="true">
     <div className="modal-dialog" role="document">
@@ -11,28 +24,28 @@ function EditForm (props) {
           </button>
         </div>
         <div className="modal-body">
-          <div className="input-group form-group">
-            <div className="input-group-prepend">
-              <span className="input-group-text"><i className="fas fa-clipboard"></i></span>
+          <form onSubmit={editTodo}>
+            <div className="input-group form-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text"><i className="fas fa-clipboard"></i></span>
+              </div>
+              <input type="text" className="form-control" placeholder="task title" name="title" defaultValue={props.populate.title} onChange={changeTodo}/>
             </div>
-            <input type="text" className="form-control" placeholder="task title" name="title" value={props.populate.title}/>
-          </div>
-          <div className="input-group form-group">
-            <div className="input-group-prepend">
-              <span className="input-group-text"><i className="fas fa-sticky-note"></i></span>
+            <div className="input-group form-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text"><i className="fas fa-sticky-note"></i></span>
+              </div>
+              <input type="text" className="form-control" placeholder="description" name="description" defaultValue={props.populate.description} onChange={changeTodo}/>
             </div>
-            <input type="text" className="form-control" placeholder="description" name="description" value={props.populate.description}/>
-          </div>
-          <div className="input-group form-group">
-            <div className="input-group-prepend">
-              <span className="input-group-text"><i className="fas fa-calendar"></i></span>
+            <div className="input-group form-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text"><i className="fas fa-calendar"></i></span>
+              </div>
+              <input type="date" className="form-control" placeholder="due date" name="due_date" defaultValue={due_date} onChange={changeTodo}/>
             </div>
-            <input type="date" className="form-control" placeholder="due date" name="due_date" value={due_date}/>
-          </div>
-        </div>
-        <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" className="btn btn-primary">Save Change</button>
+            <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <input type="submit" className="btn btn-primary" value="Save Changes"/>
+          </form>
         </div>
       </div>
     </div>
