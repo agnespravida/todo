@@ -1,6 +1,7 @@
-function EditForm () {
+function EditForm (props) {
+  let due_date = props.populate.due_date.slice(0,10)
  return (
-  <div className="modal fade" id="edit-form" tabIndex="-1" role="dialog" aria-hidden="true">
+  <div className="modal" id="edit-form" tabIndex="-1" role="dialog" aria-hidden="true">
     <div className="modal-dialog" role="document">
       <div className="modal-content">
         <div className="modal-header">
@@ -14,19 +15,19 @@ function EditForm () {
             <div className="input-group-prepend">
               <span className="input-group-text"><i className="fas fa-clipboard"></i></span>
             </div>
-            <input type="text" className="form-control" placeholder="task title"/>
+            <input type="text" className="form-control" placeholder="task title" name="title" value={props.populate.title}/>
           </div>
           <div className="input-group form-group">
             <div className="input-group-prepend">
               <span className="input-group-text"><i className="fas fa-sticky-note"></i></span>
             </div>
-            <input type="text" className="form-control" placeholder="description"/>
+            <input type="text" className="form-control" placeholder="description" name="description" value={props.populate.description}/>
           </div>
           <div className="input-group form-group">
             <div className="input-group-prepend">
               <span className="input-group-text"><i className="fas fa-calendar"></i></span>
             </div>
-            <input type="date" className="form-control" placeholder="due date"/>
+            <input type="date" className="form-control" placeholder="due date" name="due_date" value={due_date}/>
           </div>
         </div>
         <div className="modal-footer">

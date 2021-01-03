@@ -18,7 +18,8 @@ function App() {
   })
   const [todos, setTodos] = React.useState([])
   const [todo, setTodo] = React.useState({})
-  const [id, setId] = React.useState(null)
+  const [idDelete, setIdDelete] = React.useState(null)
+  const [idUpdate, setIdUpdate] = React.useState(null)
 
   function loginUser(login) {
     setLogin(login)
@@ -82,14 +83,33 @@ function App() {
     })
   }
 
-  function deleteTodo(id) {
-    setId(id)
+  function getIdDelete(id) {
+    setIdDelete(id)
   }
 
-  function deleteTodoAxios() {
+  function deleteTodo() {
     axios({
-      url: `/todos/${id}`,
+      url: `/todos/${idDelete}`,
       method: 'DELETE',
+      headers: {
+        access_token: localStorage.getItem('access_token')
+      }
+    })
+    .then(res => {
+      fetchTodo()
+    })
+    .catch(err => {
+      console.log(err.response.data)
+    })
+  }
+
+  function getIdUpdateStatus(id) {
+    setIdUpdate(id)
+  }
+  function editStatus() {
+    axios({
+      url: `/todos/${idUpdate}`,
+      method: 'patch',
       headers: {
         access_token: localStorage.getItem('access_token')
       }
@@ -109,16 +129,16 @@ function App() {
   }
 
   React.useEffect(() => {
-    addTodoAxios()
-  })
-  React.useEffect(() => {
     loginAxios()
   }, [login])
   React.useEffect(() => {
     addTodoAxios()
   })
   React.useEffect(() => {
-    deleteTodoAxios()
+    deleteTodo()
+  })
+  React.useEffect(() => {
+    editStatus()
   })
     return (
       <div className="App">
@@ -139,7 +159,8 @@ function App() {
               todos={todos}
               fetchTodo={fetchTodo}
               addTodo={addTodo}
-              deleteTodo={deleteTodo}/>
+              getIdDelete={getIdDelete}
+              getIdUpdateStatus={getIdUpdateStatus}/>
             </Route>
           </Switch>
         </Router>
